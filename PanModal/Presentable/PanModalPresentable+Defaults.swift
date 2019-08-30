@@ -58,6 +58,10 @@ public extension PanModalPresentable where Self: UIViewController {
     var anchorModalToLongForm: Bool {
         return true
     }
+    
+    var anchorModalToShortForm: Bool {
+        return false
+    }
 
     var allowsExtendedPanScrolling: Bool {
 

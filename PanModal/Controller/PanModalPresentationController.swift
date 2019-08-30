@@ -62,6 +62,11 @@ public class PanModalPresentationController: UIPresentationController {
     private var anchorModalToLongForm = true
 
     /**
+     A flag to determine if scrolling should be limited to the shortFormHeight.
+     */
+    private var anchorModalToShortForm = false
+    
+    /**
      The y content offset value of the embedded scroll view
      */
     private var scrollViewYOffset: CGFloat = 0.0
@@ -91,6 +96,13 @@ public class PanModalPresentationController: UIPresentationController {
         return anchorModalToLongForm ? longFormYPosition : defaultTopOffset
     }
 
+    /**
+     Determine anchored Y postion based on the `anchorModalToShortForm` flag
+     */
+    private var anchoredShortYPosition: CGFloat {
+        return shortFormYPosition
+    }
+    
     /**
      Configuration object for PanModalPresentationController
      */
@@ -420,6 +432,7 @@ private extension PanModalPresentationController {
         shortFormYPosition = layoutPresentable.shortFormYPos
         longFormYPosition = layoutPresentable.longFormYPos
         anchorModalToLongForm = layoutPresentable.anchorModalToLongForm
+        anchorModalToShortForm = layoutPresentable.anchorModalToShortForm
         extendsPanScrolling = layoutPresentable.allowsExtendedPanScrolling
 
         containerView?.isUserInteractionEnabled = layoutPresentable.isUserInteractionEnabled
@@ -644,7 +657,9 @@ private extension PanModalPresentationController {
      Sets the y position of the presentedView & adjusts the backgroundView.
      */
     func adjust(toYPosition yPos: CGFloat) {
-        presentedView.frame.origin.y = max(yPos, anchoredYPosition)
+        if !anchorModalToShortForm || yPos <= anchoredShortYPosition{
+            presentedView.frame.origin.y = max(yPos, anchoredYPosition)
+        }
         
         guard presentedView.frame.origin.y > shortFormYPosition else {
             backgroundView.dimState = .max
