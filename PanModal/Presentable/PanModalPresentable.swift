@@ -111,6 +111,13 @@ public protocol PanModalPresentable: AnyObject {
     var anchorModalToLongForm: Bool { get }
 
     /**
+     A flag to determine if scrolling should be limited to the shortFormHeight.
+     
+     Default value is false.
+     */
+    var anchorModalToShortForm: Bool { get }
+    
+    /**
      A flag to determine if scrolling should seamlessly transition from the pan modal container view to
      the embedded scroll view once the scroll limit has been reached.
 
