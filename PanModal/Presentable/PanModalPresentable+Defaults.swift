@@ -76,6 +76,10 @@ public extension PanModalPresentable where Self: UIViewController {
         return true
     }
 
+    var allowsTapToDismiss: Bool {
+        return false
+    }
+
     var isUserInteractionEnabled: Bool {
         return true
     }
@@ -90,10 +94,6 @@ public extension PanModalPresentable where Self: UIViewController {
 
     var showDragIndicator: Bool {
         return shouldRoundTopCorners
-    }
-
-    var dismissOnOutsideTap: Bool {
-        return false
     }
 
     func shouldRespond(to panModalGestureRecognizer: UIPanGestureRecognizer) -> Bool {
