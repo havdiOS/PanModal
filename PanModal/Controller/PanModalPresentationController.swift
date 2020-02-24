@@ -323,7 +323,7 @@ private extension PanModalPresentationController {
     var isPresentedViewAnchored: Bool {
         if !isPresentedViewAnimating
             && extendsPanScrolling
-            && presentedView.frame.minY <= anchoredYPosition {
+            && presentedView.frame.minY.rounded() <= anchoredYPosition.rounded() {
             return true
         }
 
