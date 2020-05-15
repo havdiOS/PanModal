@@ -5,6 +5,7 @@
 //  Copyright © 2019 Tiny Speck, Inc. All rights reserved.
 //
 
+#if os(iOS)
 import UIKit
 
 /**
@@ -34,10 +35,14 @@ extension UIViewController: PanModalPresenter {
         - viewControllerToPresent: The view controller to be presented
         - sourceView: The view containing the anchor rectangle for the popover.
         - sourceRect: The rectangle in the specified view in which to anchor the popover.
+        - completion: The block to execute after the presentation finishes. You may specify nil for this parameter.
 
      - Note: sourceView & sourceRect are only required for presentation on an iPad.
      */
-    public func presentPanModal(_ viewControllerToPresent: PanModalPresentable.LayoutType, sourceView: UIView? = nil, sourceRect: CGRect = .zero) {
+    public func presentPanModal(_ viewControllerToPresent: PanModalPresentable.LayoutType,
+                                sourceView: UIView? = nil,
+                                sourceRect: CGRect = .zero,
+                                completion: (() -> Void)? = nil) {
 
         /**
          Here, we deliberately do not check for size classes. More info in `PanModalPresentationDelegate`
@@ -54,7 +59,8 @@ extension UIViewController: PanModalPresenter {
             viewControllerToPresent.transitioningDelegate = PanModalPresentationDelegate.default
         }
 
-        present(viewControllerToPresent, animated: true, completion: nil)
+        present(viewControllerToPresent, animated: true, completion: completion)
     }
 
 }
+#endif

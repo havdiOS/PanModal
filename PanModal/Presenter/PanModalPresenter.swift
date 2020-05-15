@@ -5,6 +5,7 @@
 //  Copyright © 2019 Tiny Speck, Inc. All rights reserved.
 //
 
+#if os(iOS)
 import UIKit
 
 /**
@@ -28,6 +29,10 @@ protocol PanModalPresenter: AnyObject {
     /**
      Presents a view controller that conforms to the PanModalPresentable protocol
      */
-    func presentPanModal(_ viewControllerToPresent: PanModalPresentable.LayoutType, sourceView: UIView?, sourceRect: CGRect)
+    func presentPanModal(_ viewControllerToPresent: PanModalPresentable.LayoutType,
+                         sourceView: UIView?,
+                         sourceRect: CGRect,
+                         completion: (() -> Void)?)
 
 }
+#endif
