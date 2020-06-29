@@ -59,7 +59,7 @@ extension PanModalPresentationDelegate: UIViewControllerTransitioningDelegate {
 
 }
 
-extension PanModalPresentationDelegate: UIAdaptivePresentationControllerDelegate, UIPopoverPresentationControllerDelegate {
+extension PanModalPresentationDelegate: UIAdaptivePresentationControllerDelegate {
 
     /**
      - Note: We do not adapt to size classes due to the introduction of the UIPresentationController
@@ -76,6 +76,41 @@ extension PanModalPresentationDelegate: UIAdaptivePresentationControllerDelegate
     public func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
         return .none
     }
+ 
+    public func presentationControllerShouldDismiss(_ presentationController: UIPresentationController) -> Bool {
+        guard let presentable = presentationController.presentedViewController as? PanModalPresentable else {
+            return true
+        }
+        return presentable.allowsTapToDismiss
+    }
 
+    public func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
+        if let presentable = presentationController.presentedViewController as? PanModalPresentable {
+            presentable.panModalWillDismiss()
+        }
+    }
+
+    public func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        if let presentable = presentationController.presentedViewController as? PanModalPresentable {
+            presentable.panModalDidDismiss()
+        }
+    }
+
+}
+
+extension PanModalPresentationDelegate: UIPopoverPresentationControllerDelegate {
+    public func popoverPresentationControllerShouldDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) -> Bool {
+        guard let presentable = popoverPresentationController.presentedViewController as? PanModalPresentable else {
+            return true
+        }
+        return presentable.allowsTapToDismiss
+    }
+
+    public func popoverPresentationControllerDidDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) {
+        if let presentable = popoverPresentationController.presentedViewController as? PanModalPresentable {
+            presentable.panModalWillDismiss()
+            presentable.panModalDidDismiss()
+        }
+    }
 }
 #endif
