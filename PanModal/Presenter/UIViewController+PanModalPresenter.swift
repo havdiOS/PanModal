@@ -49,7 +49,7 @@ extension UIViewController: PanModalPresenter {
          */
 
         if UIDevice.current.userInterfaceIdiom == .pad {
-            viewControllerToPresent.modalPresentationStyle = .popover
+            viewControllerToPresent.modalPresentationStyle = .pageSheet
             viewControllerToPresent.popoverPresentationController?.sourceRect = sourceRect
             viewControllerToPresent.popoverPresentationController?.sourceView = sourceView ?? view
             viewControllerToPresent.popoverPresentationController?.delegate = PanModalPresentationDelegate.default
