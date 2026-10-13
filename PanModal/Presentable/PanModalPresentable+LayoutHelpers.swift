@@ -109,11 +109,11 @@ extension PanModalPresentable where Self: UIViewController {
     }
 
     private var rootViewController: UIViewController? {
-
-        guard let application = UIApplication.value(forKeyPath: #keyPath(UIApplication.shared)) as? UIApplication
-            else { return nil }
-
-        return application.keyWindow?.rootViewController
+        return UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .flatMap { $0.windows }
+            .first(where: \.isKeyWindow)?
+            .rootViewController
     }
 
 }
